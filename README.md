@@ -1,4 +1,3 @@
-Anamota Dideri, [22.11.2025 16:10]
 # Voice Control for Tanks
 
 Это Python-скрипт для голосового управления и отслеживания статистики в игре "World of Tanks" (или аналогичных танковых симуляторах). Скрипт использует распознавание речи для обработки команд, отображает оверлей с реал-тайм статистикой сессии и позволяет отправлять сообщения в игровой чат. Данные сессий сохраняются в JSON-файле для последующего анализа.
@@ -65,7 +64,6 @@ Anamota Dideri, [22.11.2025 16:10]
    - Windows: voice_control_env\Scripts\activate
    - Linux/Mac: source voice_control_env/bin/activate
 
-Anamota Dideri, [22.11.2025 16:10]
 3. Установите зависимости с помощью pip:
   
    pip install speechrecognition pyautogui pyperclip tkinter gtts pygame
