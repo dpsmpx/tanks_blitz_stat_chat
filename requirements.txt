@@ -1,0 +1,18 @@
+# Учёт статистики боёв — зависимости
+# Озвучка офлайн (pyttsx3), распознавание онлайн (Google STT).
+
+setuptools                 # ВАЖНО: на Python 3.12+ distutils удалён из стандартной
+                           # библиотеки (PEP 632), а SpeechRecognition его импортирует.
+                           # В свежем venv setuptools сам не ставится — ставим явно,
+                           # иначе будет "ModuleNotFoundError: No module named 'distutils'".
+SpeechRecognition==3.10.0
+PyAudio==0.2.14
+pyttsx3==2.90
+
+# Платформенные заметки:
+#  - Windows: pyttsx3 использует SAPI5 (comtypes ставится автоматически).
+#             Для русского голоса нужен SAPI5-голос (см. RHVoice), иначе озвучка
+#             пойдёт английским голосом — на учёт это не влияет.
+#  - PyAudio на Windows ставится готовым колесом для Python 3.8–3.13.
+#             На Python 3.14 колеса пока нет — нужен компилятор; бери 3.12/3.13.
+#  - Linux:   pyttsx3 требует espeak/espeak-ng (sudo apt install espeak-ng).
