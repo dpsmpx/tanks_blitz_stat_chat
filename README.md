@@ -5,7 +5,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.12%20%7C%203.13-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-lightgrey)
-![License](https://img.shields.io/badge/license-MIT-green)
+![License](https://img.shields.io/badge/license-GPL-green)
 
 <!-- Добавьте сюда скриншот оверлея: ![Оверлей](docs/screenshot.png) -->
 
@@ -250,7 +250,7 @@ for v in pyttsx3.init().getProperty("voices"):
 
 ## Лицензия
 
-MIT — см. файл [LICENSE](LICENSE). При необходимости замените на свою.
+GPL 3.0 — см. файл [LICENSE](LICENSE). 
 
 ---
 
