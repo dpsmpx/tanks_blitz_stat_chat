@@ -89,7 +89,7 @@ git clone <адрес-вашего-репозитория>
 cd <папка-репозитория>
 ```
 
-Либо скачайте `speech_ts.py` и `requirements.txt` в одну папку.
+Либо скачайте `voice_control.py` и `requirements.txt` в одну папку.
 
 ### 3. Создайте виртуальное окружение (рекомендуется)
 
@@ -112,7 +112,7 @@ python -m pip install -r requirements.txt
 ### 5. Запустите
 
 ```bash
-python speech_ts.py
+python voice_control.py
 ```
 
 Для запуска двойным кликом создайте рядом `run.bat`:
@@ -121,7 +121,7 @@ python speech_ts.py
 @echo off
 cd /d %~dp0
 call .venv\Scripts\activate
-python speech_ts.py
+python voice_control.py
 ```
 
 ## Русский голос для озвучки
@@ -205,7 +205,7 @@ for v in pyttsx3.init().getProperty("voices"):
 
 ## Файлы данных
 
-Все файлы создаются рядом с `speech_ts.py`:
+Все файлы создаются рядом с `voice_control.py`:
 
 - **`tank_stats.json`** — основная база. Структура:
 
