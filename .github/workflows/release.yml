@@ -27,19 +27,20 @@ jobs:
           pip install pyinstaller
 
       - name: Build exe
-        run: |
-          pyinstaller --noconfirm --clean --onefile --windowed ^
-            --name TankStatsOverlay ^
-            --add-data "tank_stat_glyphs.json;." ^
-            --collect-all easyocr ^
-            --collect-all torch ^
-            --collect-all torchvision ^
-            --collect-all skimage ^
-            --hidden-import keyboard ^
-            --hidden-import mss ^
-            --hidden-import PIL ^
-            --hidden-import PIL.ImageTk ^
-            tank_overlay.py
+        shell: cmd
+        run: >
+          pyinstaller --noconfirm --clean --onefile --windowed
+          --name TankStatsOverlay
+          --add-data "tank_stat_glyphs.json;."
+          --collect-all easyocr
+          --collect-all torch
+          --collect-all torchvision
+          --collect-all skimage
+          --hidden-import keyboard
+          --hidden-import mss
+          --hidden-import PIL
+          --hidden-import PIL.ImageTk
+          tank_overlay.py
 
       - name: Package
         shell: bash
