@@ -1,0 +1,88 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build exe
+        run: |
+          pyinstaller --noconfirm --clean --onefile --windowed ^
+            --name TankStatsOverlay ^
+            --add-data "tank_stat_glyphs.json;." ^
+            --collect-all easyocr ^
+            --collect-all torch ^
+            --collect-all torchvision ^
+            --collect-all skimage ^
+            --hidden-import keyboard ^
+            --hidden-import mss ^
+            --hidden-import PIL ^
+            --hidden-import PIL.ImageTk ^
+            tank_overlay.py
+
+      - name: Package
+        shell: bash
+        run: |
+          mkdir -p dist/package
+          cp dist/TankStatsOverlay.exe dist/package/
+          cp tank_stat_glyphs.json dist/package/ 2>/dev/null || true
+          cd dist/package
+          7z a -tzip ../TankStatsOverlay-windows-x64.zip TankStatsOverlay.exe tank_stat_glyphs.json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-x64
+          path: dist/TankStatsOverlay-windows-x64.zip
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'v1.0.0' }}
+          name: Tank Stats Overlay ${{ github.ref_type == 'tag' && github.ref_name || 'v1.0.0' }}
+          body: |
+            Оверлей статистики боёв для **World of Tanks Blitz**.
+
+            ## Что внутри
+            - `TankStatsOverlay.exe` — запуск без установки Python
+            - `tank_stat_glyphs.json` — служебные данные (положите рядом с exe)
+
+            ## Как пользоваться
+            1. Распакуйте архив.
+            2. Запустите `TankStatsOverlay.exe` (при первом запуске EasyOCR скачает модели — нужен интернет, ~100 МБ).
+            3. В настройках укажите зону ROI на плашки «Нанесён урон».
+            4. Добавьте танки, выберите текущий.
+            5. **F1** — старт боя, **F2** — победа, **F3** — поражение.
+
+            ## Важно
+            - Игра в **оконном режиме без рамки** (borderless).
+            - Для глобальных хоткеев иногда нужен запуск от администратора.
+            - Windows 10 / 11, x64.
+
+            Репозиторий: https://github.com/dpsmpx/tanks_blitz_stat_chat
+          files: dist/TankStatsOverlay-windows-x64.zip
+          draft: false
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
